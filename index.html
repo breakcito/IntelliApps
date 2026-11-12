@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IntelliApps · SCOM ERP Minero — Control Operativo en Mina</title>
+  <meta name="description" content="SCOM es el ERP minero de IntelliApps que centraliza control de personal, almacenes, maquinaria y producción de mineral. Menos papel, más control.">
+  <link rel="icon" type="image/svg+xml" href="assets/brand/isotipo.svg">
+  
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            amber: {
+              450: '#E0A247',
+              550: '#C7852E',
+            },
+            carbon: {
+              900: '#0C0E12',
+              850: '#13161C',
+              800: '#1A1E26',
+              700: '#262C38',
+              600: '#384152',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom refined styling */
+    body {
+      background-color: #0C0E12;
+      color: #E6EAF2;
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    
+    .glass-card {
+      background: rgba(26, 30, 38, 0.7);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    
+    .glass-card:hover {
+      border-color: rgba(224, 162, 71, 0.3);
+    }
+    
+    .amber-gradient-text {
+      background: linear-gradient(135deg, #FDE68A 0%, #E0A247 60%, #B45309 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    dialog::backdrop {
+      background: rgba(8, 10, 14, 0.88);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+  </style>
+</head>
+<body class="selection:bg-amber-500/30 selection:text-amber-200">
+
+  <!-- ================================================================= -->
+  <!-- NAVBAR                                                            -->
+  <!-- ================================================================= -->
+  <header class="sticky top-0 z-40 w-full border-b border-white/5 bg-carbon-900/90 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <!-- Logo -->
+      <a href="#" class="flex items-center gap-3 group">
+        <img src="assets/brand/isotipo.svg" alt="IntelliApps" class="h-9 w-auto">
+        <div class="flex flex-col">
+          <span class="font-extrabold text-xl tracking-tight text-white group-hover:text-amber-450 transition-colors">
+            IntelliApps
+          </span>
+          <span class="text-[10px] tracking-wider uppercase font-semibold text-gray-400">
+            Soluciones Informáticas
+          </span>
+        </div>
+      </a>
+
+      <!-- Navigation links -->
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
+        <a href="#sistema" class="hover:text-amber-450 transition-colors">Sistema SCOM</a>
+        <a href="#modulos" class="hover:text-amber-450 transition-colors">Módulos</a>
+        <a href="#procesos" class="hover:text-amber-450 transition-colors">Videos de Procesos (18)</a>
+        <a href="#contacto" class="hover:text-amber-450 transition-colors">Contacto</a>
+      </nav>
+
+      <!-- Action button -->
+      <div class="flex items-center gap-3">
+        <a href="https://wa.me/51912800115?text=Hola%20IntelliApps,%20deseo%20información%20sobre%20el%20ERP%20minero%20SCOM." 
+           target="_blank" rel="noopener noreferrer"
+           class="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold text-gray-200 bg-white/5 hover:bg-white/10 border border-white/10 transition-colors">
+          <svg class="w-4 h-4 text-emerald-400" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86.173.086.275.072.376-.044.101-.116.433-.506.549-.68.116-.173.231-.145.39-.086s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.099.824z"/>
+          </svg>
+          <span class="hidden sm:inline">912 800 115</span>
+        </a>
+        <a href="#contacto" 
+           class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-bold text-carbon-900 bg-amber-450 hover:bg-amber-400 shadow-lg shadow-amber-500/20 transition-all hover:scale-[1.02] active:scale-[0.98]">
+          Solicitar Demo
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================================================================= -->
+  <!-- HERO SECTION                                                      -->
+  <!-- ================================================================= -->
+  <section class="relative pt-12 pb-20 md:pt-20 md:pb-28 overflow-hidden">
+    <!-- Background atmospheric glow -->
+    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-amber-500/10 blur-[140px] pointer-events-none rounded-full"></div>
+    <div class="absolute top-1/3 left-1/4 w-[500px] h-[400px] bg-blue-600/5 blur-[160px] pointer-events-none rounded-full"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+        
+        <!-- Left: Headline & Copy -->
+        <div class="lg:col-span-7 flex flex-col items-start text-left">
+          <!-- Badge -->
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-semibold text-gray-300 mb-6">
+            <span class="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span>SCOM · ERP Minero de IntelliApps</span>
+            <span class="text-gray-500">|</span>
+            <span class="text-amber-400 font-medium">Operación en Mina</span>
+          </div>
+
+          <!-- Main Title -->
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.12] mb-6">
+            Control total de tu operación minera, <span class="amber-gradient-text">sin papeles ni vacíos.</span>
+          </h1>
+
+          <!-- Subtitle -->
+          <p class="text-lg sm:text-xl text-gray-300 leading-relaxed font-normal mb-8 max-w-2xl">
+            SCOM centraliza en un solo sistema el control de <strong>personal</strong>, la <strong>logística de almacenes</strong>, la <strong>maquinaria</strong> y la <strong>producción de mineral</strong>. Diseñado para minería pequeña y mediana que busca orden real sin burocracia técnica.
+          </p>
+
+          <!-- CTAs -->
+          <div class="flex flex-wrap items-center gap-4 w-full sm:w-auto mb-10">
+            <a href="#contacto" 
+               class="w-full sm:w-auto inline-flex justify-center items-center gap-3 px-7 py-3.5 rounded-xl font-bold text-carbon-900 bg-amber-450 hover:bg-amber-400 shadow-xl shadow-amber-500/25 transition-all text-base">
+              <span>Solicitar Demo en Vivo</span>
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </a>
+
+            <button onclick="openVideoModal('videos/erp-minero.mp4', 'Video Principal SCOM · Resumen del Sistema (1:15 min)')" 
+                    class="w-full sm:w-auto inline-flex justify-center items-center gap-3 px-6 py-3.5 rounded-xl font-semibold text-gray-200 bg-carbon-800/90 hover:bg-carbon-700/90 border border-white/10 transition-all text-base group">
+              <span class="w-8 h-8 rounded-full bg-amber-450/20 group-hover:bg-amber-450/30 flex items-center justify-center text-amber-400 transition-colors">
+                <svg class="w-4 h-4 fill-current translate-x-0.5" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              </span>
+              <span>Ver Video del Sistema (1:15 min)</span>
+            </button>
+          </div>
+
+          <!-- Feature badges -->
+          <div class="grid grid-cols-3 gap-6 pt-6 border-t border-white/10 w-full max-w-xl text-left">
+            <div>
+              <div class="font-bold text-white text-base">100% Práctico</div>
+              <div class="text-xs text-gray-400 mt-0.5">Sin jerga ni módulos que no usas</div>
+            </div>
+            <div>
+              <div class="font-bold text-white text-base">Por Roles</div>
+              <div class="text-xs text-gray-400 mt-0.5">Almacén, Personal, Mina y Gerencia</div>
+            </div>
+            <div>
+              <div class="font-bold text-white text-base">Campamento</div>
+              <div class="text-xs text-gray-400 mt-0.5">Adaptado al ritmo real del socavón</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Main Video Preview Card -->
+        <div class="lg:col-span-5 flex justify-center">
+          <div class="relative w-full max-w-md mx-auto group cursor-pointer" 
+               onclick="openVideoModal('videos/erp-minero.mp4', 'Video Principal SCOM · Demostración del Sistema')">
+            
+            <!-- Ambient border gradient -->
+            <div class="absolute -inset-1 rounded-3xl bg-gradient-to-b from-amber-500/30 via-amber-500/10 to-transparent blur-xl opacity-75 group-hover:opacity-100 transition duration-500"></div>
+
+            <div class="relative rounded-2xl overflow-hidden glass-card border border-white/15 shadow-2xl">
+              <!-- Thumbnail with badge overlay -->
+              <div class="relative aspect-[9/14] bg-carbon-900 overflow-hidden">
+                <img src="thumbnails/hero.jpg" 
+                     alt="SCOM ERP Minero en acción" 
+                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+
+                <div class="absolute inset-0 bg-gradient-to-t from-carbon-900 via-carbon-900/40 to-transparent"></div>
+
+                <!-- Floating Video Badge -->
+                <div class="absolute top-4 left-4 inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-carbon-900/80 backdrop-blur-md border border-white/10 text-xs font-mono text-amber-400">
+                  <span class="w-2 h-2 rounded-full bg-amber-450"></span>
+                  <span>VIDEO DEMO · 75s</span>
+                </div>
+
+                <!-- Play Button Center -->
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <div class="w-16 h-16 rounded-full bg-amber-450/90 text-carbon-900 flex items-center justify-center shadow-2xl group-hover:scale-110 group-hover:bg-amber-400 transition-all duration-300">
+                    <svg class="w-7 h-7 fill-current translate-x-0.5" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                  </div>
+                </div>
+
+                <!-- Bottom overlay details -->
+                <div class="absolute bottom-0 inset-x-0 p-5 text-left">
+                  <span class="text-xs font-mono font-semibold text-amber-400 uppercase tracking-wider">Recorrido General</span>
+                  <h3 class="text-lg font-bold text-white mt-1">Cómo SCOM ordena el personal, almacén y mineral</h3>
+                  <p class="text-xs text-gray-300 mt-1 line-clamp-2">Una demostración directa de la interfaz y el flujo operativo en mina.</p>
+                </div>
+              </div>
+
+              <!-- Bar under player -->
+              <div class="px-5 py-3.5 bg-carbon-800/80 flex items-center justify-between text-xs text-gray-300 border-t border-white/5">
+                <span class="flex items-center gap-2 font-medium">
+                  <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                  Resolución Vertical 9:16 para celular
+                </span>
+                <span class="font-mono text-amber-450 font-bold">1:15 min</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================= -->
+  <!-- PROBLEMA vs SOLUCIÓN                                              -->
+  <!-- ================================================================= -->
+  <section id="sistema" class="py-20 border-t border-white/5 bg-carbon-850/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <span class="text-xs font-mono font-bold text-amber-450 tracking-widest uppercase">Realidad de Mina</span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-2">
+          La diferencia entre registrar en papel y operar con SCOM
+        </h2>
+        <p class="text-base sm:text-lg text-gray-400 mt-4 font-normal">
+          Sin promesas vacías ni teorías de software. Así resolvemos los 4 dolores que frenan a las empresas mineras todos los días.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        
+        <!-- Dolor 1 -->
+        <div class="glass-card rounded-2xl p-6 text-left flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 flex items-center justify-center font-bold text-sm mb-4">
+              01
+            </div>
+            <div class="text-xs font-mono text-red-400 uppercase tracking-wider">El problema</div>
+            <h3 class="text-base font-bold text-white mt-1 mb-2">Cuadernos y hojas de cálculo desactualizadas</h3>
+            <p class="text-sm text-gray-400 leading-relaxed mb-6">
+              Nadie sabe con certeza cuánto stock queda en almacén hasta que una broca o un filtro falta y se detiene una labor.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-white/10">
+            <div class="text-xs font-mono text-emerald-400 uppercase tracking-wider font-semibold">Solución SCOM</div>
+            <p class="text-sm font-medium text-gray-200 mt-1">
+              Kardex en tiempo real, alertas de stock mínimo y trazabilidad de cada perno o insumo entregado.
+            </p>
+          </div>
+        </div>
+
+        <!-- Dolor 2 -->
+        <div class="glass-card rounded-2xl p-6 text-left flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 flex items-center justify-center font-bold text-sm mb-4">
+              02
+            </div>
+            <div class="text-xs font-mono text-red-400 uppercase tracking-wider">El problema</div>
+            <h3 class="text-base font-bold text-white mt-1 mb-2">Hojas de firmas y reclamos en planilla</h3>
+            <p class="text-sm text-gray-400 leading-relaxed mb-6">
+              Colas en garita para firmar hojas sueltas. A fin de mes, el contador pierde días cruzando cuadernos para pagar.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-white/10">
+            <div class="text-xs font-mono text-emerald-400 uppercase tracking-wider font-semibold">Solución SCOM</div>
+            <p class="text-sm font-medium text-gray-200 mt-1">
+              Marcaje con fotocheck por cámara con validación visual. El tareo calcula la planilla automáticamente.
+            </p>
+          </div>
+        </div>
+
+        <!-- Dolor 3 -->
+        <div class="glass-card rounded-2xl p-6 text-left flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 flex items-center justify-center font-bold text-sm mb-4">
+              03
+            </div>
+            <div class="text-xs font-mono text-red-400 uppercase tracking-wider">El problema</div>
+            <h3 class="text-base font-bold text-white mt-1 mb-2">Maquinaria parada por falta de mantenimiento</h3>
+            <p class="text-sm text-gray-400 leading-relaxed mb-6">
+              El scoop o generador se descompone en socavón porque se pasó la fecha del cambio de aceite y filtros sin aviso.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-white/10">
+            <div class="text-xs font-mono text-emerald-400 uppercase tracking-wider font-semibold">Solución SCOM</div>
+            <p class="text-sm font-medium text-gray-200 mt-1">
+              Control por horómetro diario y alertas preventivas automáticas antes de que ocurra una falla costosa.
+            </p>
+          </div>
+        </div>
+
+        <!-- Dolor 4 -->
+        <div class="glass-card rounded-2xl p-6 text-left flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 flex items-center justify-center font-bold text-sm mb-4">
+              04
+            </div>
+            <div class="text-xs font-mono text-red-400 uppercase tracking-wider">El problema</div>
+            <h3 class="text-base font-bold text-white mt-1 mb-2">Desconocer la rentabilidad de cada lote</h3>
+            <p class="text-sm text-gray-400 leading-relaxed mb-6">
+              Se despacha mineral sin saber con precisión cuánto costó extraerlo frente a lo que liquidará la comercializadora.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-white/10">
+            <div class="text-xs font-mono text-emerald-400 uppercase tracking-wider font-semibold">Solución SCOM</div>
+            <p class="text-sm font-medium text-gray-200 mt-1">
+              Costeo por lote, optimizador de mezcla (blending) y cálculo exacto de maquila, deducciones y cobro neto.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================================================================= -->
+  <!-- LOS 4 MÓDULOS DE SCOM                                             -->
+  <!-- ================================================================= -->
+  <section id="modulos" class="py-20 border-t border-white/5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+        <div>
+          <span class="text-xs font-mono font-bold text-amber-450 tracking-widest uppercase">Arquitectura del Software</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-2">
+            Cuatro módulos integrados en una misma base
+          </h2>
+        </div>
+        <p class="text-gray-400 text-sm md:text-base max-w-md">
+          Cada departamento trabaja con su propia vista especializada, pero la información fluye al instante hacia Gerencia y Contabilidad.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        
+        <!-- Módulo 1 -->
+        <div class="glass-card rounded-2xl p-8 relative overflow-hidden group">
+          <div class="flex items-center justify-between mb-6">
+            <span class="text-xs font-mono font-bold text-amber-450 uppercase px-3 py-1 rounded bg-amber-450/10 border border-amber-450/20">
+              Módulo 01
+            </span>
+            <span class="text-xs text-gray-400 font-mono">Personal & Tareo</span>
+          </div>
+          <h3 class="text-2xl font-bold text-white mb-3">Control de Personal</h3>
+          <p class="text-sm text-gray-300 leading-relaxed mb-6">
+            Elimina las carpetas físicas de contratos y las hojas de firma. Controla asistencia diaria, horas extras, turnos rotativos y genera el reporte de planilla consolidada para el pago formal o por jornada.
+          </p>
+          <ul class="space-y-2.5 text-sm text-gray-300 border-t border-white/10 pt-5">
+            <li class="flex items-center gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-amber-450"></span>
+              <span>Registro de contratos y adendas con historial completo.</span>
+            </li>
+            <li class="flex items-center gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-amber-450"></span>
+              <span>Programación de turnos de día y noche con tiempo de tolerancia.</span>
+            </li>
+            <li class="flex items-center gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-amber-450"></span>
+              <span>Marcaje con fotocheck por cámara con validación de identidad.</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Módulo 2 -->
+        <div class="glass-card rounded-2xl p-8 relative overflow-hidden group">
+          <div class="flex items-center justify-between mb-6">
+            <span class="text-xs font-mono font-bold text-amber-450 uppercase px-3 py-1 rounded bg-amber-450/10 border border-amber-450/20">
+              Módulo 02
+            </span>
+            <span class="text-xs text-gray-400 font-mono">Logística & Compras</span>
+          </div>
+          <h3 class="text-2xl font-bold text-white mb-3">Logística y Almacenes</h3>
+          <p class="text-sm text-gray-300 leading-relaxed mb-6">
+            Control de inventario de repuestos, EPPs y herramientas entre el almacén central y los almacenes de labor. Cuadro comparativo de cotizaciones para compras inteligentes y sin sobrecostos.
+          </p>
+          <ul class="space-y-2.5 text-sm text-gray-300 border-t border-white/10 pt-5">
+            <li class="flex items-center gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-amber-450"></span>
+              <span>Kardex automatizado y atención de pedidos a contratistas.</span>
+            </li>
+            <li class="flex items-center gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-amber-450"></span>
+              <span>Reabastecimiento central y préstamos cruzados entre almacenes.</span>
+            </li>
+            <li class="flex items-center gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-amber-450"></span>
+              <span>Cuadro comparativo de cotizaciones y órdenes de compra con recepción.</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Módulo 3 -->
+        <div class="glass-card rounded-2xl p-8 relative overflow-hidden group">
+          <div class="flex items-center justify-between mb-6">
+            <span class="text-xs font-mono font-bold text-amber-450 uppercase px-3 py-1 rounded bg-amber-450/10 border border-amber-450/20">
+              Módulo 03
+            </span>
+            <span class="text-xs text-gray-400 font-mono">Maquinaria & Activos</span>
+          </div>
+          <h3 class="text-2xl font-bold text-white mb-3">Control de Activos y Mantenimiento</h3>
+          <p class="text-sm text-gray-300 leading-relaxed mb-6">
+            Lleva la hoja de vida de cada cargador scoop, volquete, perforadora y grupo electrógeno. Monitorea horómetros diarios, consumo de combustible y programa servicios preventivos antes de que los equipos fallen.
+          </p>
+          <ul class="space-y-2.5 text-sm text-gray-300 border-t border-white/10 pt-5">
+            <li class="flex items-center gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-amber-450"></span>
+              <span>Ficha técnica con número de serie, componentes y depreciación.</span>
+            </li>
+            <li class="flex items-center gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-amber-450"></span>
+              <span>Registro de horómetros por guardia y rendimiento de combustible.</span>
+            </li>
+            <li class="flex items-center gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-amber-450"></span>
+              <span>Alertas preventivas de cambio de filtros, aceite y mantenimiento correctivo.</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Módulo 4 -->
+        <div class="glass-card rounded-2xl p-8 relative overflow-hidden group">
+          <div class="flex items-center justify-between mb-6">
+            <span class="text-xs font-mono font-bold text-amber-450 uppercase px-3 py-1 rounded bg-amber-450/10 border border-amber-450/20">
+              Módulo 04
+            </span>
+            <span class="text-xs text-gray-400 font-mono">Producción & Venta</span>
+          </div>
+          <h3 class="text-2xl font-bold text-white mb-3">Producción de Mineral y Venta</h3>
+          <p class="text-sm text-gray-300 leading-relaxed mb-6">
+            Trazabilidad del mineral desde el tajo hasta la comercializadora. Registra pesajes en balanza, leyes de laboratorio, optimiza la mezcla con blending y liquida la venta descontando maquila y deducciones exactas.
+          </p>
+          <ul class="space-y-2.5 text-sm text-gray-300 border-t border-white/10 pt-5">
+            <li class="flex items-center gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-amber-450"></span>
+              <span>Control de lotes de extracción asignados por labor y contratista.</span>
+            </li>
+            <li class="flex items-center gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-amber-450"></span>
+              <span>Leyes de laboratorio químico (Au, Ag, humedad) y mezclado (blending).</span>
+            </li>
+            <li class="flex items-center gap-2.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-amber-450"></span>
+              <span>Liquidación con precio internacional, maquila por TM y valor neto real.</span>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================================================================= -->
+  <!-- BIBLIOTECA DE PROCESOS EN VIDEO (18 VIDEOS)                      -->
+  <!-- ================================================================= -->
+  <section id="procesos" class="py-24 border-t border-white/5 bg-carbon-900/60">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <span class="text-xs font-mono font-bold text-amber-450 tracking-widest uppercase">Videos de Apoyo y Guía</span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-2">
+          18 procesos operativos explicados en 45 segundos
+        </h2>
+        <p class="text-base sm:text-lg text-gray-400 mt-4">
+          Cada video muestra una situación real en mina y el paso a paso exacto de cómo se resuelve en SCOM. Haz clic en cualquiera para verlo al instante.
+        </p>
+      </div>
+
+      <!-- Filter Tabs -->
+      <div class="flex items-center justify-center gap-2 flex-wrap mb-12">
+        <button onclick="filterVideos('all')" id="tab-all" 
+                class="px-5 py-2 rounded-xl text-sm font-semibold bg-amber-450 text-carbon-900 transition-all shadow-md">
+          Todos (18)
+        </button>
+        <button onclick="filterVideos('personal')" id="tab-personal" 
+                class="px-5 py-2 rounded-xl text-sm font-semibold bg-white/5 text-gray-300 hover:bg-white/10 border border-white/5 transition-all">
+          01 · Personal (3)
+        </button>
+        <button onclick="filterVideos('logistica')" id="tab-logistica" 
+                class="px-5 py-2 rounded-xl text-sm font-semibold bg-white/5 text-gray-300 hover:bg-white/10 border border-white/5 transition-all">
+          02 · Logística (6)
+        </button>
+        <button onclick="filterVideos('activos')" id="tab-activos" 
+                class="px-5 py-2 rounded-xl text-sm font-semibold bg-white/5 text-gray-300 hover:bg-white/10 border border-white/5 transition-all">
+          03 · Activos (3)
+        </button>
+        <button onclick="filterVideos('produccion')" id="tab-produccion" 
+                class="px-5 py-2 rounded-xl text-sm font-semibold bg-white/5 text-gray-300 hover:bg-white/10 border border-white/5 transition-all">
+          04 · Producción (6)
+        </button>
+      </div>
+
+      <!-- Video Grid (Rendered by JS using lightweight thumbnails) -->
+      <div id="video-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Process cards dynamically inserted here -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================================================================= -->
+  <!-- POR QUÉ INTELLIAPPS                                               -->
+  <!-- ================================================================= -->
+  <section class="py-20 border-t border-white/5 bg-carbon-850">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 text-left">
+        
+        <div class="p-8 rounded-2xl glass-card">
+          <div class="w-12 h-12 rounded-xl bg-amber-450/10 border border-amber-450/30 text-amber-400 flex items-center justify-center font-bold text-lg mb-6">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-2">Desarrollado para minería real</h3>
+          <p class="text-sm text-gray-400 leading-relaxed">
+            No adaptamos software de tiendas o farmacias para una mina. SCOM fue concebido desde el socavón, con términos reales: cuadrillas, labores, kardex minero, horómetros, volquetes y blending.
+          </p>
+        </div>
+
+        <div class="p-8 rounded-2xl glass-card">
+          <div class="w-12 h-12 rounded-xl bg-amber-450/10 border border-amber-450/30 text-amber-400 flex items-center justify-center font-bold text-lg mb-6">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-2">Capacitación y soporte directo</h3>
+          <p class="text-sm text-gray-400 leading-relaxed">
+            Entrenamos directamente a tu personal: almaceneros, supervisores de guardia, administrativos y contadores. El sistema se entiende al primer vistazo, incluso para quien nunca usó un ERP.
+          </p>
+        </div>
+
+        <div class="p-8 rounded-2xl glass-card">
+          <div class="w-12 h-12 rounded-xl bg-amber-450/10 border border-amber-450/30 text-amber-400 flex items-center justify-center font-bold text-lg mb-6">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-2">Sin áreas de sistemas complejas</h3>
+          <p class="text-sm text-gray-400 leading-relaxed">
+            No necesitas contratar ingenieros de servidores ni pagar licencias astronómicas. SCOM funciona en la nube o en servidores locales de campamento con copias de seguridad automáticas.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================= -->
+  <!-- CONTACTO Y DEMOSTRACIÓN                                           -->
+  <!-- ================================================================= -->
+  <section id="contacto" class="py-24 border-t border-white/5 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+      
+      <div class="max-w-4xl mx-auto rounded-3xl bg-gradient-to-b from-carbon-800 to-carbon-900 border border-amber-500/20 p-8 sm:p-12 md:p-16 text-center relative overflow-hidden shadow-2xl">
+        <!-- Glow element -->
+        <div class="absolute -top-24 -left-24 w-72 h-72 bg-amber-500/15 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-24 -right-24 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <span class="text-xs font-mono font-bold text-amber-450 uppercase tracking-widest">Atención Inmediata</span>
+        <h2 class="text-3xl sm:text-5xl font-extrabold text-white mt-3 mb-4 tracking-tight">
+          Solicita una demostración guiada de SCOM
+        </h2>
+        <p class="text-base sm:text-lg text-gray-300 max-w-2xl mx-auto mb-10 leading-relaxed">
+          En una llamada de 20 minutos te mostramos cómo SCOM se adapta a tu operación en mina. Sin compromiso y con respuestas directas de ingenieros especializados.
+        </p>
+
+        <!-- Direct WhatsApp Action Button -->
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-lg mx-auto">
+          <a href="https://wa.me/51912800115?text=Hola%20IntelliApps,%20deseo%20coordinar%20una%20demostración%20en%20vivo%20del%20sistema%20SCOM." 
+             target="_blank" rel="noopener noreferrer"
+             class="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl font-bold text-base text-carbon-900 bg-amber-450 hover:bg-amber-400 shadow-xl shadow-amber-500/20 transition-all hover:scale-[1.02] active:scale-[0.98]">
+            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86.173.086.275.072.376-.044.101-.116.433-.506.549-.68.116-.173.231-.145.39-.086s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.099.824z"/></svg>
+            <span>Escribir al WhatsApp: 912 800 115</span>
+          </a>
+
+          <a href="mailto:contacto@intelli-apps.com?subject=Solicitud%20de%20Demo%20SCOM"
+             class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl font-semibold text-sm text-gray-300 bg-white/5 hover:bg-white/10 border border-white/10 transition-colors">
+            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+            <span>contacto@intelli-apps.com</span>
+          </a>
+        </div>
+
+        <div class="mt-8 text-xs text-gray-400 flex items-center justify-center gap-4">
+          <span>✓ Demostración personalizada</span>
+          <span>·</span>
+          <span>✓ Soporte técnico en Perú</span>
+          <span>·</span>
+          <span>✓ Confidencialidad total de datos</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================================================================= -->
+  <!-- FOOTER                                                            -->
+  <!-- ================================================================= -->
+  <footer class="border-t border-white/5 bg-carbon-900 py-14">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12 text-left">
+        
+        <!-- Brand column -->
+        <div class="md:col-span-2">
+          <div class="flex items-center gap-3 mb-4">
+            <img src="assets/brand/isotipo.svg" alt="IntelliApps" class="h-8 w-auto">
+            <span class="font-bold text-lg text-white">IntelliApps · SCOM</span>
+          </div>
+          <p class="text-sm text-gray-400 max-w-sm mb-4">
+            Soluciones informáticas especializadas en control de operaciones, logística, personal y comercialización para empresas mineras.
+          </p>
+          <div class="text-xs font-mono text-gray-400">
+            SCOM: Menos papel, más control, mejores decisiones.
+          </div>
+        </div>
+
+        <!-- Links -->
+        <div>
+          <div class="text-xs font-mono font-bold text-white uppercase tracking-wider mb-4">Navegación</div>
+          <ul class="space-y-2 text-sm text-gray-400">
+            <li><a href="#sistema" class="hover:text-amber-450 transition-colors">Sistema SCOM</a></li>
+            <li><a href="#modulos" class="hover:text-amber-450 transition-colors">Módulos Operativos</a></li>
+            <li><a href="#procesos" class="hover:text-amber-450 transition-colors">Videos de Procesos (18)</a></li>
+            <li><a href="#contacto" class="hover:text-amber-450 transition-colors">Contacto & Demo</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact info -->
+        <div>
+          <div class="text-xs font-mono font-bold text-white uppercase tracking-wider mb-4">Contacto Oficial</div>
+          <ul class="space-y-2 text-sm text-gray-400">
+            <li>Web: <span class="text-gray-200">intelli-apps.com</span></li>
+            <li>WhatsApp: <span class="text-gray-200">912 800 115</span></li>
+            <li>Soporte: <span class="text-gray-200">contacto@intelli-apps.com</span></li>
+            <li>Perú</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-400 gap-4">
+        <div>
+          © 2026 IntelliApps – Soluciones Informáticas. Todos los derechos reservados.
+        </div>
+        <div class="text-gray-400">
+          SCOM · Sistema de Control de Operaciones Mineras
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================================================================= -->
+  <!-- VIDEO MODAL PLAYER (NATIVE HTML5 DIALOG)                          -->
+  <!-- ================================================================= -->
+  <dialog id="video-dialog" class="p-0 bg-transparent rounded-2xl max-w-4xl w-full mx-auto backdrop:bg-carbon-900/90 backdrop:backdrop-blur-md outline-none">
+    <div class="relative w-full max-w-sm sm:max-w-md mx-auto bg-carbon-850 border border-white/15 rounded-2xl overflow-hidden shadow-2xl flex flex-col">
+      
+      <!-- Top header bar of modal -->
+      <div class="px-4 py-3 bg-carbon-800 border-b border-white/10 flex items-center justify-between">
+        <div class="flex items-center gap-2 truncate">
+          <span class="w-2 h-2 rounded-full bg-amber-450"></span>
+          <span id="modal-title" class="text-xs font-bold text-white truncate max-w-[240px] sm:max-w-[300px]">
+            Reproduciendo proceso
+          </span>
+        </div>
+        <button onclick="closeVideoModal()" 
+                class="w-7 h-7 rounded-lg bg-white/10 hover:bg-white/20 text-gray-300 hover:text-white flex items-center justify-center text-sm font-bold transition-colors">
+          ✕
+        </button>
+      </div>
+
+      <!-- Video container (vertical 9:16) -->
+      <div class="relative bg-black aspect-[9/16] w-full flex items-center justify-center">
+        <video id="modal-video-player" 
+               controls 
+               playsinline 
+               preload="metadata"
+               class="w-full h-full object-contain">
+          Tu navegador no soporta reproducción de video HTML5.
+        </video>
+      </div>
+
+      <!-- Bottom controls / Prev-Next switcher -->
+      <div class="px-4 py-3 bg-carbon-800 border-t border-white/10 flex items-center justify-between text-xs text-gray-300">
+        <button id="btn-prev-video" onclick="prevVideo()" class="inline-flex items-center gap-1 hover:text-amber-450 transition-colors font-medium">
+          ← Anterior
+        </button>
+        <span id="modal-counter" class="font-mono text-gray-400 text-[11px]"></span>
+        <button id="btn-next-video" onclick="nextVideo()" class="inline-flex items-center gap-1 hover:text-amber-450 transition-colors font-medium">
+          Siguiente →
+        </button>
+      </div>
+
+    </div>
+  </dialog>
+
+  <!-- ================================================================= -->
+  <!-- JAVASCRIPT: PROCESS VIDEOS DATA & LIGHTWEIGHT THUMBNAIL RENDERER   -->
+  <!-- ================================================================= -->
+  <script>
+    const PROCESS_VIDEOS = [
+      // Bloque 1: Personal
+      {
+        id: "01-contratos",
+        num: "01",
+        title: "Contratos y Adendas",
+        block: "personal",
+        blockLabel: "Control de Personal",
+        role: "Contador · Gerencia",
+        duration: "43s",
+        desc: "Registra contratos en planilla, jornada o prueba y adendas sin papeles sueltos.",
+        video: "videos/procesos/01-contratos.mp4",
+        thumb: "thumbnails/01-contratos.jpg"
+      },
+      {
+        id: "02-horarios",
+        num: "02",
+        title: "Programación de Horarios",
+        block: "personal",
+        blockLabel: "Control de Personal",
+        role: "Encargado de Personal",
+        duration: "44s",
+        desc: "Organiza turnos de día y noche, rotaciones y tolerancia sin armar horarios a mano.",
+        video: "videos/procesos/02-horarios.mp4",
+        thumb: "thumbnails/02-horarios.jpg"
+      },
+      {
+        id: "03-asistencia-planilla",
+        num: "03",
+        title: "Marcaje con Fotocheck y Planilla",
+        block: "personal",
+        blockLabel: "Control de Personal",
+        role: "Trabajador · Contador",
+        duration: "46s",
+        desc: "Marcaje con fotocheck en garita y consolidación automática directa a planilla.",
+        video: "videos/procesos/03-asistencia-planilla.mp4",
+        thumb: "thumbnails/03-asistencia-planilla.jpg"
+      },
+
+      // Bloque 2: Logística
+      {
+        id: "04-inventario",
+        num: "04",
+        title: "Control de Inventario y Kardex",
+        block: "logistica",
+        blockLabel: "Logística y Almacén",
+        role: "Almacenero · Logística",
+        duration: "45s",
+        desc: "Stock en tiempo real, alertas de quiebre y kardex automatizado sin descuadres.",
+        video: "videos/procesos/04-inventario.mp4",
+        thumb: "thumbnails/04-inventario.jpg"
+      },
+      {
+        id: "05-pedidos",
+        num: "05",
+        title: "Atención de Pedidos de Mina",
+        block: "logistica",
+        blockLabel: "Logística y Almacén",
+        role: "Contratista · Almacenero",
+        duration: "41s",
+        desc: "Entrega de EPPs e insumos a contratistas con validación y descuento automático.",
+        video: "videos/procesos/05-pedidos.mp4",
+        thumb: "thumbnails/05-pedidos.jpg"
+      },
+      {
+        id: "06-reabastecimiento",
+        num: "06",
+        title: "Reabastecimiento de Almacén",
+        block: "logistica",
+        blockLabel: "Logística y Almacén",
+        role: "Almacenero · Logística",
+        duration: "41s",
+        desc: "Solicita reposición desde almacén central antes de que los repuestos críticos se agoten.",
+        video: "videos/procesos/06-reabastecimiento.mp4",
+        thumb: "thumbnails/06-reabastecimiento.jpg"
+      },
+      {
+        id: "07-prestamos",
+        num: "07",
+        title: "Préstamos entre Almacenes",
+        block: "logistica",
+        blockLabel: "Logística y Almacén",
+        role: "Jefe de Logística",
+        duration: "42s",
+        desc: "Transfiere repuestos entre campamentos sin perder la pista ni generar doble stock.",
+        video: "videos/procesos/07-prestamos.mp4",
+        thumb: "thumbnails/07-prestamos.jpg"
+      },
+      {
+        id: "08-cotizaciones",
+        num: "08",
+        title: "Cotizaciones de Compra",
+        block: "logistica",
+        blockLabel: "Logística y Almacén",
+        role: "Logística · Gerencia",
+        duration: "42s",
+        desc: "Cuadro comparativo de proveedores para elegir el mejor precio y plazo de entrega.",
+        video: "videos/procesos/08-cotizaciones.mp4",
+        thumb: "thumbnails/08-cotizaciones.jpg"
+      },
+      {
+        id: "09-ordenes-compra",
+        num: "09",
+        title: "Órdenes de Compra y Recepción",
+        block: "logistica",
+        blockLabel: "Logística y Almacén",
+        role: "Logística · Almacenero",
+        duration: "38s",
+        desc: "Emisión de órdenes formales y verificación física al momento de la descarga en mina.",
+        video: "videos/procesos/09-ordenes-compra.mp4",
+        thumb: "thumbnails/09-ordenes-compra.jpg"
+      },
+
+      // Bloque 3: Activos
+      {
+        id: "10-activos",
+        num: "10",
+        title: "Ficha Técnica y Hoja de Vida",
+        block: "activos",
+        blockLabel: "Control de Activos",
+        role: "Contador · Gerencia",
+        duration: "41s",
+        desc: "Historial completo de maquinaria, componentes, placas de serie y depreciación.",
+        video: "videos/procesos/10-activos.mp4",
+        thumb: "thumbnails/10-activos.jpg"
+      },
+      {
+        id: "11-maquinaria",
+        num: "11",
+        title: "Maquinaria y Horómetro Diario",
+        block: "activos",
+        blockLabel: "Control de Activos",
+        role: "Operador · Contador",
+        duration: "39s",
+        desc: "Registro diario de horómetro y consumo de combustible para medir rendimiento exacto.",
+        video: "videos/procesos/11-maquinaria.mp4",
+        thumb: "thumbnails/11-maquinaria.jpg"
+      },
+      {
+        id: "12-mantenimiento",
+        num: "12",
+        title: "Mantenimiento y Alertas",
+        block: "activos",
+        blockLabel: "Control de Activos",
+        role: "Operador · Gerencia",
+        duration: "41s",
+        desc: "Alertas preventivas por horas de trabajo para evitar paradas costosas en socavón.",
+        video: "videos/procesos/12-mantenimiento.mp4",
+        thumb: "thumbnails/12-mantenimiento.jpg"
+      },
+
+      // Bloque 4: Producción
+      {
+        id: "13-lotes",
+        num: "13",
+        title: "Registro de Lotes de Mineral",
+        block: "produccion",
+        blockLabel: "Producción de Mineral",
+        role: "Contratista · Gerencia",
+        duration: "40s",
+        desc: "Asignación de mineral extraído por labor, contratista y guardia con código de lote.",
+        video: "videos/procesos/13-lotes.mp4",
+        thumb: "thumbnails/13-lotes.jpg"
+      },
+      {
+        id: "14-despacho",
+        num: "14",
+        title: "Despacho y Transporte a Planta",
+        block: "produccion",
+        blockLabel: "Producción de Mineral",
+        role: "Despacho · Balanza",
+        duration: "41s",
+        desc: "Control de pesaje en balanza de plataforma, volquetes y guías de remisión.",
+        video: "videos/procesos/14-despacho.mp4",
+        thumb: "thumbnails/14-despacho.jpg"
+      },
+      {
+        id: "15-analisis",
+        num: "15",
+        title: "Leyes y Análisis Químico",
+        block: "produccion",
+        blockLabel: "Producción de Mineral",
+        role: "Laboratorio · Gerencia",
+        duration: "39s",
+        desc: "Carga de análisis de laboratorio: leyes de oro, plata, humedad y recuperación.",
+        video: "videos/procesos/15-analisis.mp4",
+        thumb: "thumbnails/15-analisis.jpg"
+      },
+      {
+        id: "16-blending",
+        num: "16",
+        title: "Mezcla de Lotes (Blending)",
+        block: "produccion",
+        blockLabel: "Producción de Mineral",
+        role: "Gerencia de Mina",
+        duration: "40s",
+        desc: "Calcula la proporción óptima entre pilas para cumplir con la ley pactada de venta.",
+        video: "videos/procesos/16-blending.mp4",
+        thumb: "thumbnails/16-blending.jpg"
+      },
+      {
+        id: "17-costos",
+        num: "17",
+        title: "Costos por Lote y Guardia",
+        block: "produccion",
+        blockLabel: "Producción de Mineral",
+        role: "Gerencia · Contador",
+        duration: "42s",
+        desc: "Consolidación de mano de obra, insumos y maquinaria frente al valor del mineral.",
+        video: "videos/procesos/17-costos.mp4",
+        thumb: "thumbnails/17-costos.jpg"
+      },
+      {
+        id: "18-venta",
+        num: "18",
+        title: "Liquidación y Venta de Mineral",
+        block: "produccion",
+        blockLabel: "Producción de Mineral",
+        role: "Gerencia · Comercializadora",
+        duration: "45s",
+        desc: "Acuerdo comercial, precio internacional, descuento de maquila y liquidación neta.",
+        video: "videos/procesos/18-venta.mp4",
+        thumb: "thumbnails/18-venta.jpg"
+      }
+    ];
+
+    let currentFilter = 'all';
+    let currentVideoIndex = 0;
+
+    // Render cards using lightweight thumbnails
+    function renderVideoCards(filter = 'all') {
+      currentFilter = filter;
+      const grid = document.getElementById('video-grid');
+      const filtered = filter === 'all' 
+        ? PROCESS_VIDEOS 
+        : PROCESS_VIDEOS.filter(v => v.block === filter);
+
+      grid.innerHTML = filtered.map(item => `
+        <article class="glass-card rounded-2xl overflow-hidden flex flex-col justify-between group transition-all duration-300 hover:scale-[1.01] hover:border-amber-450/40">
+          <div>
+            <!-- Thumbnail box with play trigger -->
+            <div class="relative aspect-[16/10] bg-carbon-900 overflow-hidden cursor-pointer"
+                 onclick="openVideoModal('${item.video}', 'Proceso ${item.num} · ${item.title}')">
+              
+              <img src="${item.thumb}" 
+                   alt="${item.title}" 
+                   loading="lazy"
+                   class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+              
+              <div class="absolute inset-0 bg-gradient-to-t from-carbon-900/90 via-carbon-900/20 to-transparent"></div>
+
+              <!-- Top badges -->
+              <div class="absolute top-3 left-3 right-3 flex items-center justify-between">
+                <span class="px-2.5 py-1 rounded bg-carbon-900/85 backdrop-blur-md text-amber-450 text-[11px] font-mono font-bold border border-amber-450/20">
+                  ${item.num}
+                </span>
+                <span class="px-2.5 py-1 rounded bg-carbon-900/85 backdrop-blur-md text-gray-300 text-[11px] font-mono font-medium border border-white/10">
+                  ⏱ ${item.duration}
+                </span>
+              </div>
+
+              <!-- Play button on hover -->
+              <div class="absolute inset-0 flex items-center justify-center opacity-85 group-hover:opacity-100 transition-opacity">
+                <div class="w-12 h-12 rounded-full bg-amber-450 text-carbon-900 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                  <svg class="w-5 h-5 fill-current translate-x-0.5" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                </div>
+              </div>
+
+              <!-- Role tag on bottom of thumbnail -->
+              <div class="absolute bottom-2.5 left-3 text-[11px] font-mono text-gray-300 bg-carbon-900/80 px-2 py-0.5 rounded border border-white/10">
+                👤 ${item.role}
+              </div>
+            </div>
+
+            <!-- Content details -->
+            <div class="p-5 text-left">
+              <div class="text-[11px] font-mono uppercase tracking-wider text-amber-450/90 font-semibold mb-1">
+                ${item.blockLabel}
+              </div>
+              <h3 class="text-base font-bold text-white group-hover:text-amber-400 transition-colors">
+                ${item.num} · ${item.title}
+              </h3>
+              <p class="text-xs text-gray-400 mt-2 leading-relaxed">
+                ${item.desc}
+              </p>
+            </div>
+          </div>
+
+          <div class="px-5 pb-5 pt-0">
+            <button onclick="openVideoModal('${item.video}', 'Proceso ${item.num} · ${item.title}')"
+                    class="w-full py-2.5 rounded-lg text-xs font-bold text-gray-200 bg-white/5 hover:bg-amber-450 hover:text-carbon-900 border border-white/10 transition-all flex items-center justify-center gap-1.5">
+              <span>Reproducir Guía</span>
+              <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    // Filter switching
+    function filterVideos(category) {
+      ['all', 'personal', 'logistica', 'activos', 'produccion'].forEach(cat => {
+        const btn = document.getElementById(`tab-${cat}`);
+        if (cat === category) {
+          btn.className = "px-5 py-2 rounded-xl text-sm font-semibold bg-amber-450 text-carbon-900 transition-all shadow-md";
+        } else {
+          btn.className = "px-5 py-2 rounded-xl text-sm font-semibold bg-white/5 text-gray-300 hover:bg-white/10 border border-white/5 transition-all";
+        }
+      });
+      renderVideoCards(category);
+    }
+
+    // Modal controls
+    const dialog = document.getElementById('video-dialog');
+    const player = document.getElementById('modal-video-player');
+    const title = document.getElementById('modal-title');
+    const counter = document.getElementById('modal-counter');
+
+    function openVideoModal(videoSrc, videoTitle) {
+      // Find index in PROCESS_VIDEOS
+      currentVideoIndex = PROCESS_VIDEOS.findIndex(v => v.video === videoSrc);
+      
+      title.textContent = videoTitle;
+      player.src = videoSrc;
+      player.currentTime = 0;
+      
+      if (currentVideoIndex >= 0) {
+        counter.textContent = `${currentVideoIndex + 1} de ${PROCESS_VIDEOS.length}`;
+        document.getElementById('btn-prev-video').style.visibility = 'visible';
+        document.getElementById('btn-next-video').style.visibility = 'visible';
+      } else {
+        counter.textContent = "Demostración SCOM";
+        document.getElementById('btn-prev-video').style.visibility = 'hidden';
+        document.getElementById('btn-next-video').style.visibility = 'hidden';
+      }
+
+      dialog.showModal();
+      player.play().catch(() => {});
+    }
+
+    function closeVideoModal() {
+      player.pause();
+      player.src = "";
+      dialog.close();
+    }
+
+    // Light dismiss: click outside modal content closes dialog
+    dialog.addEventListener('click', (event) => {
+      const rect = dialog.getBoundingClientRect();
+      const isInDialog = (
+        rect.top <= event.clientY &&
+        event.clientY <= rect.top + rect.height &&
+        rect.left <= event.clientX &&
+        event.clientX <= rect.left + rect.width
+      );
+      if (!isInDialog) {
+        closeVideoModal();
+      }
+    });
+
+    // Close on Escape
+    dialog.addEventListener('cancel', () => {
+      closeVideoModal();
+    });
+
+    function nextVideo() {
+      if (currentVideoIndex >= 0) {
+        currentVideoIndex = (currentVideoIndex + 1) % PROCESS_VIDEOS.length;
+        const next = PROCESS_VIDEOS[currentVideoIndex];
+        openVideoModal(next.video, `Proceso ${next.num} · ${next.title}`);
+      }
+    }
+
+    function prevVideo() {
+      if (currentVideoIndex >= 0) {
+        currentVideoIndex = (currentVideoIndex - 1 + PROCESS_VIDEOS.length) % PROCESS_VIDEOS.length;
+        const prev = PROCESS_VIDEOS[currentVideoIndex];
+        openVideoModal(prev.video, `Proceso ${prev.num} · ${prev.title}`);
+      }
+    }
+
+    // Initial render
+    renderVideoCards('all');
+  </script>
+
+</body>
+</html>
