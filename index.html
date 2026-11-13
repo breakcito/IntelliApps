@@ -2,15 +2,15 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IntelliApps · SCOM, el sistema de control para operaciones mineras</title>
-  <meta name="description" content="IntelliApps desarrolla software para industrias exigentes. Creadores de SCOM: personal, logística, maquinaria y producción minera en una sola plataforma.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>IntelliApps · Software operativo y SCOM para minería</title>
+  <meta name="description" content="IntelliApps desarrolla software a medida e implementa SCOM: personal, almacén, maquinaria y producción minera en una sola plataforma.">
   <meta name="theme-color" content="#08090b">
   <link rel="icon" type="image/svg+xml" href="assets/brand/isotipo.svg">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600&family=Inter:wght@400;500;600&family=Instrument+Serif:ital@1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -22,8 +22,7 @@
     <symbol id="i-play" viewBox="0 0 12 12"><path d="M2 1v10l9-5z" fill="currentColor"/></symbol>
     <symbol id="i-check" viewBox="0 0 20 20"><path d="m4 10.5 4 4 8-9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     <symbol id="i-x" viewBox="0 0 20 20"><path d="m5 5 10 10M15 5 5 15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
-    <symbol id="i-box" viewBox="0 0 20 20"><path d="m10 2 7 4v8l-7 4-7-4V6zm0 8 7-4M10 10v8M10 10 3 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
-    <symbol id="i-scale" viewBox="0 0 20 20"><path d="M3 15h14M5 15V8l5-4 5 4v7M8 15v-4h4v4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 20 20"><path d="M3 6h14M3 10h14M3 14h14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
   </svg>
 
   <!-- NAVEGACIÓN -->
@@ -31,13 +30,25 @@
     <div class="wrap nav-inner">
       <a href="#inicio" class="nav-logo" aria-label="IntelliApps, inicio"><img src="assets/brand/logo-blanco.svg" alt="IntelliApps"></a>
       <nav class="nav-links" aria-label="Principal">
-        <a href="#empresa">Empresa</a>
+        <a href="#empresa">Nosotros</a>
         <a href="#scom">SCOM</a>
         <a href="#procesos">Procesos</a>
-        <a href="#servicios">Servicios</a>
         <a href="#contacto">Contacto</a>
       </nav>
-      <a href="#contacto" class="btn btn-light">Solicitar demo</a>
+      <div class="nav-actions">
+        <a href="#contacto" class="btn btn-light">Solicitar demo</a>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-menu">
+          <svg><use href="#i-menu"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="mobile-menu" id="mobile-menu" hidden>
+      <div class="wrap mobile-menu-inner">
+        <a href="#empresa">Nosotros y capacidades</a>
+        <a href="#scom">Qué ofrece SCOM</a>
+        <a href="#procesos">18 procesos en video</a>
+        <a href="#contacto" class="btn btn-blue">Solicitar demo <svg><use href="#i-arrow"/></svg></a>
+      </div>
     </div>
   </header>
 
@@ -48,169 +59,121 @@
       <div class="hero-bg" data-parallax><img src="assets/img/mining/01-mina-aerea.jpg" alt=""></div>
       <div class="wrap hero-grid">
         <div class="hero-copy">
-          <span class="eyebrow" data-reveal>SCOM · Sistema de Control de Operaciones Mineras</span>
-          <h1 class="display h-xl" data-reveal style="--d:.08s">Tu mina,<br><em>bajo control</em> en tiempo real.</h1>
-          <p class="lead" data-reveal style="--d:.16s">Personal, almacén, maquinaria y mineral en una sola plataforma. Sin cuadernos, sin hojas de cálculo, sin cruces manuales.</p>
-          <div class="hero-cta" data-reveal style="--d:.24s">
-            <a href="#contacto" class="btn btn-light">Solicitar demostración <svg><use href="#i-arrow"/></svg></a>
-            <button class="btn btn-ghost" data-open-hero><span class="btn-play-ico"><svg><use href="#i-play"/></svg></span>Ver SCOM en video</button>
-          </div>
-          <div class="hero-meta" data-reveal style="--d:.32s">
-            <div><b>18 procesos</b>documentados en video</div>
-            <div><b>Offline-ready</b>sincroniza al recuperar señal</div>
-            <div><b>Capacitación</b>en campo, con tu equipo</div>
+          <span class="eyebrow" data-reveal>IntelliApps · Ingeniería de software</span>
+          <h1 class="display h-xl" data-reveal style="--d:.06s">Software de control para operaciones mineras.</h1>
+          <p class="lead" data-reveal style="--d:.12s">Desarrollamos plataformas a medida e implementamos SCOM, nuestro sistema para gestionar personal, almacén, maquinaria y producción en una sola base de datos.</p>
+          <div class="hero-cta" data-reveal style="--d:.18s">
+            <a href="#scom" class="btn btn-light">Explorar SCOM <svg><use href="#i-arrow"/></svg></a>
+            <button class="btn btn-ghost" data-open-hero><span class="btn-play-ico"><svg><use href="#i-play"/></svg></span>Ver video</button>
           </div>
         </div>
 
-        <div class="hero-stage" data-reveal style="--d:.2s">
+        <div class="hero-stage" data-reveal style="--d:.14s">
           <div class="phone" id="hero-phone" data-open-hero role="button" tabindex="0" aria-label="Reproducir video de SCOM">
             <div class="phone-screen">
-              <video src="videos/erp-minero.mp4" poster="thumbnails/hero.jpg" muted loop playsinline preload="metadata" autoplay></video>
+              <video src="videos/erpminero.mp4" poster="thumbnails/hero.jpg" muted loop playsinline preload="metadata" autoplay></video>
             </div>
             <div class="phone-glare"></div>
           </div>
-          <div class="chip chip-1"><span class="chip-ico ok"><svg><use href="#i-check"/></svg></span><div><b>Ingreso registrado</b><span>Turno A · Portón Norte</span></div></div>
-          <div class="chip chip-2"><span class="chip-ico warn"><svg><use href="#i-box"/></svg></span><div><b>Stock mínimo alcanzado</b><span>Pedido al almacén central</span></div></div>
-          <div class="chip chip-3"><span class="chip-ico blue"><svg><use href="#i-scale"/></svg></span><div><b>Ticket de pesaje</b><span>Tara y bruto registrados</span></div></div>
         </div>
       </div>
-      <div class="scroll-hint" aria-hidden="true">Scroll<i></i></div>
     </section>
 
-    <!-- 2 · EMPRESA / MANIFIESTO -->
+    <!-- 2 · NOSOTROS Y CAPACIDADES -->
     <section class="section on-paper" id="empresa">
       <div class="wrap">
-        <span class="eyebrow" data-reveal style="margin-bottom:40px">IntelliApps · Soluciones Informáticas</span>
-        <p class="manifesto-text" id="manifesto">Las operaciones mineras no pueden detenerse por sistemas complicados. SCOM reemplaza cuadernos, hojas de cálculo y cruces manuales por una sola base de datos confiable, hecha para quien trabaja en campamento, almacén y socavón.</p>
-
-        <div class="stats">
-          <div class="stat"><div class="stat-num"><span data-count="18">18</span></div><p class="stat-label">procesos mineros cubiertos de punta a punta</p></div>
-          <div class="stat"><div class="stat-num"><span data-count="4">4</span></div><p class="stat-label">frentes de control: personal, logística, activos y producción</p></div>
-          <div class="stat"><div class="stat-num"><span data-count="1">1</span></div><p class="stat-label">base de datos compartida por gerencia, contabilidad y almacén</p></div>
+        <div class="about-head" data-reveal>
+          <span class="eyebrow">Sobre IntelliApps</span>
+          <h2 class="display h-lg">Construimos herramientas claras para operaciones que no pueden detenerse.</h2>
+          <p class="lead">Combinamos desarrollo de software, integración con equipos en campo y acompañamiento directo para reemplazar hojas de cálculo y registros en papel por información confiable.</p>
         </div>
 
-        <div class="principles">
-          <article class="principle" data-reveal><span class="principle-n">01</span><h3>Sin funciones innecesarias</h3><p>Cada pantalla resuelve una tarea específica en pocos segundos. Menos clics, cero confusiones.</p></article>
-          <article class="principle" data-reveal style="--d:.1s"><span class="principle-n">02</span><h3>Arquitectura offline-ready</h3><p>Operación continua en zonas con señal inestable, con sincronización automática en la nube.</p></article>
-          <article class="principle" data-reveal style="--d:.2s"><span class="principle-n">03</span><h3>Soporte y acompañamiento directo</h3><p>Capacitamos a tu equipo y nos adaptamos a la escala real de tu operación.</p></article>
+        <div class="cap-grid">
+          <article class="cap" data-reveal>
+            <span class="cap-n">01</span>
+            <h3>Software a medida</h3>
+            <p>Plataformas web y móviles diseñadas según los flujos, roles y normativas reales de cada empresa.</p>
+          </article>
+          <article class="cap" data-reveal style="--d:.06s">
+            <span class="cap-n">02</span>
+            <h3>Integración con hardware</h3>
+            <p>Conexión directa con balanzas camioneras, lectores QR/RFID y sensores de combustible.</p>
+          </article>
+          <article class="cap" data-reveal style="--d:.12s">
+            <span class="cap-n">03</span>
+            <h3>Offline-ready y soporte en campo</h3>
+            <p>Operación continua en zonas con señal inestable y capacitación presencial a supervisores y almaceneros.</p>
+          </article>
         </div>
       </div>
     </section>
 
-    <!-- 3 · SCOM: CUATRO FRENTES -->
-    <section class="section on-ink story" id="scom">
+    <!-- 3 · SCOM: QUÉ OFRECE EL SISTEMA -->
+    <section class="section on-ink" id="scom">
       <div class="wrap">
-        <div class="section-head">
-          <span class="eyebrow" data-reveal>SCOM · ERP especializado en minería</span>
-          <h2 class="display h-lg" data-reveal style="--d:.08s">Cuatro frentes de control.<br><em>Una sola fuente de verdad.</em></h2>
+        <div class="section-head" data-reveal>
+          <span class="eyebrow">SCOM · ERP Minero</span>
+          <h2 class="display h-lg">Cuatro áreas conectadas en un solo sistema.</h2>
+          <p class="lead">Selecciona un módulo para revisar qué resuelve y verlo en pantalla.</p>
         </div>
 
-        <div class="story-grid">
-          <div class="story-steps" id="story-steps">
-
-            <article class="module" data-layer="0">
-              <span class="module-n">01 — PERSONAL</span>
-              <h3 class="display h-md">Contratos, turnos y pre-planilla automática.</h3>
-              <img class="module-thumb" src="thumbnails/03-asistencia-planilla.jpg" alt="Asistencia con fotocheck en SCOM" loading="lazy">
-              <p>Se acabaron las carpetas con papeles y las dudas con el tareo. Contratos con adendas trazables, guardias programadas y asistencia diaria por fotocheck o QR.</p>
-              <ul>
-                <li><svg><use href="#i-check"/></svg>Contratos a prueba, jornada o planilla</li>
-                <li><svg><use href="#i-check"/></svg>Horarios por grupos y turnos día/noche</li>
-                <li><svg><use href="#i-check"/></svg>Pre-planilla en segundos con asistencia verificada</li>
-              </ul>
-              <a href="#procesos" class="link-arrow" data-goto-filter="personal">Ver procesos 01–03 <svg><use href="#i-arrow"/></svg></a>
-            </article>
-
-            <article class="module" data-layer="1">
-              <span class="module-n">02 — LOGÍSTICA Y ALMACÉN</span>
-              <h3 class="display h-md">Cada repuesto, cada vale, cada compra.</h3>
-              <img class="module-thumb" src="thumbnails/04-inventario.jpg" alt="Inventario en SCOM" loading="lazy">
-              <p>Los contratistas piden materiales con límite por labor y el almacenero despacha con firma digital. Si falta stock, el sistema genera el pedido o el préstamo entre faenas.</p>
-              <ul>
-                <li><svg><use href="#i-check"/></svg>Kardex valorizado con alertas de stock mínimo</li>
-                <li><svg><use href="#i-check"/></svg>Préstamos entre almacenes sin burocracia</li>
-                <li><svg><use href="#i-check"/></svg>Cotizaciones comparadas y órdenes de compra formales</li>
-              </ul>
-              <a href="#procesos" class="link-arrow" data-goto-filter="logistica">Ver procesos 04–09 <svg><use href="#i-arrow"/></svg></a>
-            </article>
-
-            <article class="module" data-layer="2">
-              <span class="module-n">03 — ACTIVOS Y MAQUINARIA</span>
-              <h3 class="display h-md">Mantén las máquinas trabajando, no en el taller.</h3>
-              <img class="module-thumb" src="thumbnails/12-mantenimiento.jpg" alt="Mantenimiento preventivo en SCOM" loading="lazy">
-              <p>Scoops, volquetes y generadores monitoreados día a día: horas, combustible y mantenimiento por horas acumuladas, antes de que fallen en pleno socavón.</p>
-              <ul>
-                <li><svg><use href="#i-check"/></svg>Ficha técnica, serie, horómetro y ubicación</li>
-                <li><svg><use href="#i-check"/></svg>Consumo de diésel vs. horas operadas</li>
-                <li><svg><use href="#i-check"/></svg>Órdenes de taller con repuestos descontados del kardex</li>
-              </ul>
-              <a href="#procesos" class="link-arrow" data-goto-filter="activos">Ver procesos 10–12 <svg><use href="#i-arrow"/></svg></a>
-            </article>
-
-            <article class="module" data-layer="3">
-              <span class="module-n">04 — PRODUCCIÓN Y MINERAL</span>
-              <h3 class="display h-md">De la labor a la liquidación, con números claros.</h3>
-              <img class="module-thumb" src="thumbnails/14-despacho.jpg" alt="Pesaje en balanza con SCOM" loading="lazy">
-              <p>Lotes identificados por contrata, camiones pesados con tara y bruto, leyes de laboratorio, simulador de blending y liquidación transparente con la comercializadora.</p>
-              <ul>
-                <li><svg><use href="#i-check"/></svg>Lotes por labor con ticket de pesaje en balanza</li>
-                <li><svg><use href="#i-check"/></svg>Simulador de blending según leyes requeridas</li>
-                <li><svg><use href="#i-check"/></svg>Liquidación con maquila y mermas exactas</li>
-              </ul>
-              <a href="#procesos" class="link-arrow" data-goto-filter="produccion">Ver procesos 13–18 <svg><use href="#i-arrow"/></svg></a>
-            </article>
-
+        <div class="scom-grid">
+          <div class="scom-tabs" id="scom-tabs" role="tablist" aria-label="Módulos de SCOM">
+            <button class="stab" role="tab" aria-selected="true" data-mod="0">
+              <span class="stab-n">01</span>
+              <span class="stab-body">
+                <b>Personal</b>
+                <span>Contratos, programación de guardias y pre-planilla automática desde el tareo por fotocheck o QR.</span>
+              </span>
+            </button>
+            <button class="stab" role="tab" aria-selected="false" data-mod="1">
+              <span class="stab-n">02</span>
+              <span class="stab-body">
+                <b>Logística y Almacén</b>
+                <span>Kardex en tiempo real, vales digitales para contratistas, préstamos entre faenas y órdenes de compra.</span>
+              </span>
+            </button>
+            <button class="stab" role="tab" aria-selected="false" data-mod="2">
+              <span class="stab-n">03</span>
+              <span class="stab-body">
+                <b>Activos y Maquinaria</b>
+                <span>Registro técnico de equipos, horómetros diarios, control de diésel y mantenimiento preventivo.</span>
+              </span>
+            </button>
+            <button class="stab" role="tab" aria-selected="false" data-mod="3">
+              <span class="stab-n">04</span>
+              <span class="stab-body">
+                <b>Producción y Mineral</b>
+                <span>Trazabilidad de lotes, pesaje en balanza, leyes de laboratorio, blending y liquidación final.</span>
+              </span>
+            </button>
           </div>
 
-          <div class="story-sticky" aria-hidden="true">
-            <div class="phone">
-              <div class="phone-screen" id="story-screen">
-                <div class="layer"><video muted loop playsinline preload="none" poster="thumbnails/03-asistencia-planilla.jpg" data-src="videos/procesos/03-asistencia-planilla.mp4"></video></div>
-                <div class="layer"><video muted loop playsinline preload="none" poster="thumbnails/04-inventario.jpg" data-src="videos/procesos/04-inventario.mp4"></video></div>
-                <div class="layer"><video muted loop playsinline preload="none" poster="thumbnails/12-mantenimiento.jpg" data-src="videos/procesos/12-mantenimiento.mp4"></video></div>
-                <div class="layer"><video muted loop playsinline preload="none" poster="thumbnails/14-despacho.jpg" data-src="videos/procesos/14-despacho.mp4"></video></div>
+          <div class="scom-stage">
+            <div class="phone scom-phone">
+              <div class="phone-screen">
+                <video id="scom-video" muted loop playsinline preload="none" poster="thumbnails/03-asistencia-planilla.jpg"></video>
               </div>
               <div class="phone-glare"></div>
             </div>
-            <div class="story-progress"><i></i><i></i><i></i><i></i></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 4 · EN TERRENO (scroll horizontal) -->
-    <section class="field" aria-labelledby="field-title">
-      <div class="field-pin" id="field-pin">
-        <div class="field-sticky">
-          <div class="wrap field-head">
-            <div class="section-head" style="margin:0">
-              <span class="eyebrow">Hecho para el terreno</span>
-              <h2 class="display h-lg" id="field-title">Del socavón<br>a la <em>gerencia</em>.</h2>
+            <div class="scom-meta">
+              <ul id="scom-bullets"></ul>
+              <a href="#procesos" class="link-arrow" id="scom-link" data-goto-filter="personal">Ver procesos de Personal <svg><use href="#i-arrow"/></svg></a>
             </div>
-            <p class="lead" style="max-width:24em">Cada pantalla nace de una situación real de mina: la garita, el almacén, la balanza, el laboratorio.</p>
-          </div>
-          <div class="field-track" id="field-track">
-            <figure class="shot"><img src="assets/img/mining/17-garita-asistencia.jpg" alt="Garita de asistencia" loading="lazy"><figcaption><span>Personal</span>Garita y asistencia con fotocheck</figcaption></figure>
-            <figure class="shot"><img src="assets/img/mining/03-almacen.jpg" alt="Almacén de mina" loading="lazy"><figcaption><span>Logística</span>Almacén y kardex en tiempo real</figcaption></figure>
-            <figure class="shot"><img src="assets/img/mining/24-taller-mantenimiento.jpg" alt="Taller de mantenimiento" loading="lazy"><figcaption><span>Activos</span>Taller y mantenimiento preventivo</figcaption></figure>
-            <figure class="shot"><img src="assets/img/mining/28-cambio-guardia-socavon.jpg" alt="Cambio de guardia en socavón" loading="lazy"><figcaption><span>Personal</span>Cambio de guardia en socavón</figcaption></figure>
-            <figure class="shot"><img src="assets/img/mining/19-balanza-camion.jpg" alt="Balanza camionera" loading="lazy"><figcaption><span>Producción</span>Pesaje en balanza camionera</figcaption></figure>
-            <figure class="shot"><img src="assets/img/mining/20-laboratorio-muestras.jpg" alt="Laboratorio de muestras" loading="lazy"><figcaption><span>Producción</span>Leyes y ensayos de laboratorio</figcaption></figure>
-            <figure class="shot"><img src="assets/img/mining/22-blending-cargador.jpg" alt="Blending con cargador" loading="lazy"><figcaption><span>Producción</span>Blending de mineral</figcaption></figure>
-            <figure class="shot"><img src="assets/img/mining/16-negociacion-venta.jpg" alt="Negociación de venta" loading="lazy"><figcaption><span>Producción</span>Liquidación y venta</figcaption></figure>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 5 · CATÁLOGO DE 18 PROCESOS -->
+    <!-- 4 · 18 PROCESOS EN VIDEO -->
     <section class="section on-paper" id="procesos">
       <div class="wrap">
-        <div class="section-head">
-          <span class="eyebrow" data-reveal>Guía práctica en video</span>
-          <h2 class="display h-lg" data-reveal style="--d:.08s">Cada proceso de mina,<br><em>paso a paso.</em></h2>
-          <p class="lead" data-reveal style="--d:.16s">Mira cómo se ingresan los datos en pantalla y cómo queda resuelta cada situación del día a día.</p>
+        <div class="section-head" data-reveal>
+          <span class="eyebrow">Sistema en funcionamiento</span>
+          <h2 class="display h-lg">18 procesos documentados paso a paso.</h2>
+          <p class="lead">Filtra por área y reproduce cualquier proceso para ver cómo se opera en pantalla.</p>
         </div>
+
         <div class="catalog-bar">
           <div class="filters" id="filters" role="group" aria-label="Filtrar por categoría"></div>
           <div class="rail-arrows">
@@ -222,92 +185,24 @@
       <div class="rail" id="rail"></div>
     </section>
 
-    <!-- 6 · ANTES / DESPUÉS -->
-    <section class="section on-ink">
-      <div class="wrap">
-        <div class="section-head">
-          <span class="eyebrow" data-reveal>El cambio</span>
-          <h2 class="display h-lg" data-reveal style="--d:.08s">Dejar el cuaderno<br>no es un riesgo. <em>Seguir con él, sí.</em></h2>
-        </div>
-        <div class="versus">
-          <article class="panel panel-old" data-reveal>
-            <img src="assets/img/mining/15-cuaderno.jpg" alt="" loading="lazy">
-            <span class="tag">Control tradicional en papel</span>
-            <h3 class="display h-md">Lo que pasa cuando dependes de cuadernos</h3>
-            <ul>
-              <li><svg><use href="#i-x"/></svg>Hojas de asistencia perdidas o manchadas al cerrar la quincena.</li>
-              <li><svg><use href="#i-x"/></svg>Repuestos que figuran en stock pero no existen en estantería.</li>
-              <li><svg><use href="#i-x"/></svg>Discusiones con contratistas sobre toneladas y leyes.</li>
-              <li><svg><use href="#i-x"/></svg>Gerencia decide con días de retraso, con datos desactualizados.</li>
-            </ul>
-          </article>
-          <article class="panel panel-new" data-reveal style="--d:.12s">
-            <span class="tag">Con IntelliApps · SCOM</span>
-            <h3 class="display h-md">Lo que logras con un sistema integrado</h3>
-            <ul>
-              <li><svg><use href="#i-check"/></svg>Tareo digital con pre-planilla calculada en segundos.</li>
-              <li><svg><use href="#i-check"/></svg>Kardex valorizado con firma digital en cada vale de salida.</li>
-              <li><svg><use href="#i-check"/></svg>Pesaje exacto en balanza y liquidación transparente.</li>
-              <li><svg><use href="#i-check"/></svg>Gerencia revisa el estado de la mina desde su celular.</li>
-            </ul>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- 7 · SERVICIOS -->
-    <section class="section on-paper" id="servicios">
-      <div class="wrap">
-        <div class="section-head">
-          <span class="eyebrow" data-reveal>Más allá de SCOM</span>
-          <h2 class="display h-lg" data-reveal style="--d:.08s">Software que se adapta<br>a <em>tu operación.</em></h2>
-        </div>
-        <div class="bento">
-          <article class="bento-card" data-reveal>
-            <span class="tag">Web · Móvil · Nube</span>
-            <div>
-              <div class="code-sketch" aria-hidden="true"><span class="k">const</span> operacion = <span class="k">await</span> sistema.<span class="s">conectar</span>(tu_negocio);</div>
-              <h3 style="margin-top:28px">Desarrollo de software a medida</h3>
-              <p>Diseño y arquitectura de plataformas web, móviles y empresariales adaptadas exactamente a los flujos y normativas de tu negocio.</p>
-            </div>
-          </article>
-          <article class="bento-card" data-reveal style="--d:.1s">
-            <img src="assets/img/mining/19-balanza-camion.jpg" alt="" loading="lazy">
-            <span class="tag">Hardware + Software</span>
-            <div>
-              <h3>Integración con balanzas y sensores</h3>
-              <p>Conexión directa del software con balanzas camioneras, sensores de combustible y lectores de código QR/RFID.</p>
-            </div>
-          </article>
-          <article class="bento-card" data-reveal style="--d:.2s">
-            <div>
-              <span class="tag">Capacitación en campo</span>
-              <h3 style="margin-top:20px">Transformación digital operativa</h3>
-            </div>
-            <p>Acompañamos a tu empresa del papel y las hojas de cálculo hacia bases de datos centralizadas, capacitando a supervisores, almaceneros y personal administrativo. Sin traumas en la transición.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- 8 · CONTACTO -->
+    <!-- 5 · CONTACTO -->
     <section class="section on-ink contact" id="contacto">
       <div class="wrap contact-grid">
-        <div class="contact-copy">
-          <span class="eyebrow" data-reveal>Hablemos de tu operación</span>
-          <h2 class="display h-lg" data-reveal style="--d:.08s">¿Listo para una <em>operación ordenada?</em></h2>
-          <p class="lead" data-reveal style="--d:.16s">Coordinamos una demostración personalizada de SCOM o evaluamos el desarrollo a medida que tu empresa necesita. Sin compromiso y directo al grano.</p>
-          <div class="contact-list" data-reveal style="--d:.24s">
+        <div class="contact-copy" data-reveal>
+          <span class="eyebrow">Contacto</span>
+          <h2 class="display h-lg">Conversemos sobre tu operación.</h2>
+          <p class="lead">Coordinamos una demostración de SCOM o revisamos el desarrollo a medida que tu empresa necesita.</p>
+          <div class="contact-list">
             <a href="https://wa.me/51912800115" target="_blank" rel="noopener noreferrer"><span>WhatsApp / Teléfono</span><b>+51 912 800 115</b></a>
             <a href="https://intelli-apps.com" target="_blank" rel="noopener noreferrer"><span>Portal web</span><b>intelli-apps.com</b></a>
           </div>
         </div>
 
-        <form class="form" id="contact-form" data-reveal style="--d:.12s">
-          <div class="field-row"><label for="f-name">Nombre de contacto</label><input id="f-name" required placeholder="Ej: Ing. Carlos Medina" autocomplete="name"></div>
-          <div class="field-row"><label for="f-empresa">Empresa / operación</label><input id="f-empresa" required placeholder="Ej: Minera San Juan" autocomplete="organization"></div>
-          <div class="field-row"><label for="f-phone">WhatsApp / celular</label><input id="f-phone" type="tel" required placeholder="Ej: 912 345 678" autocomplete="tel"></div>
-          <div class="field-row"><label for="f-interes">¿Qué solución te interesa?</label>
+        <form class="form" id="contact-form" data-reveal style="--d:.08s">
+          <div class="field-row"><label for="f-name">Nombre</label><input id="f-name" required placeholder="Ej: Ing. Carlos Medina" autocomplete="name"></div>
+          <div class="field-row"><label for="f-empresa">Empresa</label><input id="f-empresa" required placeholder="Ej: Minera San Juan" autocomplete="organization"></div>
+          <div class="field-row"><label for="f-phone">WhatsApp / celular</label><input id="f-phone" type="tel" inputmode="tel" required placeholder="Ej: 912 345 678" autocomplete="tel"></div>
+          <div class="field-row"><label for="f-interes">¿Qué te interesa revisar?</label>
             <select id="f-interes">
               <option>SCOM · ERP Minero (completo)</option>
               <option>Módulo de Personal y Tareo</option>
@@ -317,8 +212,8 @@
               <option>Desarrollo de software a medida</option>
             </select>
           </div>
-          <button class="btn btn-blue" type="submit">Solicitar demostración por WhatsApp <svg><use href="#i-arrow"/></svg></button>
-          <p class="form-note">Te conectaremos directamente con un consultor de IntelliApps.</p>
+          <button class="btn btn-blue" type="submit">Solicitar demo por WhatsApp <svg><use href="#i-arrow"/></svg></button>
+          <p class="form-note">Respuesta directa con un consultor de IntelliApps.</p>
         </form>
       </div>
     </section>
@@ -329,7 +224,7 @@
     <div class="wrap footer-inner">
       <img src="assets/brand/logo-blanco.svg" alt="IntelliApps">
       <nav aria-label="Pie de página">
-        <a href="#empresa">Empresa</a><a href="#scom">SCOM</a><a href="#procesos">Procesos</a><a href="#servicios">Servicios</a><a href="#contacto">Contacto</a>
+        <a href="#empresa">Nosotros</a><a href="#scom">SCOM</a><a href="#procesos">Procesos</a><a href="#contacto">Contacto</a>
       </nav>
       <span>© 2026 IntelliApps. Todos los derechos reservados.</span>
     </div>
@@ -337,14 +232,14 @@
 
   <!-- MODAL DE VIDEO -->
   <dialog class="vmodal" id="vmodal" aria-labelledby="vm-title">
-    <button class="vmodal-close" id="vm-close" aria-label="Cerrar"><svg><use href="#i-x"/></svg></button>
     <div class="vmodal-body">
+      <button class="vmodal-close" id="vm-close" aria-label="Cerrar"><svg><use href="#i-x"/></svg></button>
       <div class="vmodal-phone"><video id="vm-video" controls playsinline></video></div>
       <div class="vmodal-info">
         <span class="eyebrow" id="vm-tag">SCOM</span>
         <h3 class="display h-md" id="vm-title"></h3>
         <p id="vm-desc"></p>
-        <a class="btn btn-light" id="vm-cta" href="#contacto">Solicitar demostración <svg><use href="#i-arrow"/></svg></a>
+        <a class="btn btn-light" id="vm-cta" href="#contacto">Solicitar demo <svg><use href="#i-arrow"/></svg></a>
       </div>
     </div>
   </dialog>

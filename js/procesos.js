@@ -28,7 +28,7 @@ const PROCESOS = [
 ];
 
 const VIDEO_PRINCIPAL = {
-  src: 'videos/erp-minero.mp4',
+  src: 'videos/erpminero.mp4',
   title: 'SCOM · Menos papel, más control',
   desc: 'Personal, logística, maquinaria y producción: los cuatro frentes de tu operación en un solo sistema.',
 };

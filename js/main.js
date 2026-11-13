@@ -1,119 +1,132 @@
-/* IntelliApps · SCOM — interacciones de la landing */
+/* IntelliApps · SCOM — interacciones */
 (() => {
   const $ = (sel, root = document) => root.querySelector(sel);
   const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const isDesktop = () => matchMedia('(min-width: 1025px)').matches;
-  const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+  const isDesktop = () => matchMedia('(min-width: 961px)').matches;
 
-  /* ---------- Navegación: fondo al hacer scroll ---------- */
+  /* ---------- Navegación y menú móvil ---------- */
   const nav = $('#nav');
-  const onScrollNav = () => nav.classList.toggle('scrolled', scrollY > 24);
+  const toggle = $('#nav-toggle');
+  const mmenu = $('#mobile-menu');
+  const setMenu = (open) => {
+    mmenu.hidden = !open;
+    nav.classList.toggle('menu-open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+  };
+  toggle.addEventListener('click', () => setMenu(mmenu.hidden));
+  $$('a', mmenu).forEach((a) => a.addEventListener('click', () => setMenu(false)));
 
-  /* ---------- Revelado de elementos ---------- */
+  /* ---------- Revelado ---------- */
   const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach((e) => {
       if (!e.isIntersecting) return;
       e.target.classList.add('in');
       revealObserver.unobserve(e.target);
     });
-  }, { threshold: 0.15, rootMargin: '0px 0px -6% 0px' });
+  }, { threshold: 0.12, rootMargin: '0px 0px -4% 0px' });
   $$('[data-reveal]').forEach((el) => revealObserver.observe(el));
 
-  /* ---------- Manifiesto: palabras que se iluminan con el scroll ---------- */
-  const manifesto = $('#manifesto');
-  const words = manifesto.textContent.trim().split(/\s+/);
-  manifesto.innerHTML = words.map((w) => `<span class="w">${w}</span>`).join(' ');
-  const wordEls = $$('.w', manifesto);
-  const updateManifesto = () => {
-    const r = manifesto.getBoundingClientRect();
-    const progress = clamp((innerHeight * 0.85 - r.top) / (r.height + innerHeight * 0.3));
-    const lit = Math.round(progress * wordEls.length);
-    wordEls.forEach((el, i) => el.classList.toggle('on', i < lit));
-  };
-
-  /* ---------- Contadores ---------- */
-  const countObserver = new IntersectionObserver((entries) => {
-    entries.forEach((e) => {
-      if (!e.isIntersecting) return;
-      countObserver.unobserve(e.target);
-      const end = +e.target.dataset.count;
-      if (reduceMotion || end < 2) return;
-      const t0 = performance.now();
-      const tick = (t) => {
-        const p = clamp((t - t0) / 1600);
-        e.target.textContent = Math.round(end * (1 - Math.pow(1 - p, 4)));
-        if (p < 1) requestAnimationFrame(tick);
-      };
-      requestAnimationFrame(tick);
-    });
-  }, { threshold: 0.6 });
-  $$('[data-count]').forEach((el) => countObserver.observe(el));
-
-  /* ---------- Hero: parallax y tilt 3D ---------- */
+  /* ---------- Hero: parallax y tilt 3D en escritorio ---------- */
   const heroBg = $('[data-parallax]');
   const heroStage = $('.hero-stage');
   const heroPhone = $('#hero-phone');
-  const updateHeroParallax = () => {
-    if (scrollY > innerHeight * 1.2) return;
-    heroBg.style.transform = `translate3d(0, ${scrollY * 0.18}px, 0)`;
-  };
   if (!reduceMotion) {
     heroStage.addEventListener('pointermove', (e) => {
+      if (!isDesktop()) return;
       const r = heroStage.getBoundingClientRect();
       const x = (e.clientX - r.left) / r.width - 0.5;
       const y = (e.clientY - r.top) / r.height - 0.5;
-      heroPhone.style.transform = `rotateY(${x * 14}deg) rotateX(${-y * 10}deg)`;
+      heroPhone.style.transform = `rotateY(${x * 12}deg) rotateX(${-y * 8}deg)`;
     });
     heroStage.addEventListener('pointerleave', () => { heroPhone.style.transform = ''; });
   }
 
-  /* ---------- Módulos SCOM: teléfono fijo que cambia con el scroll ---------- */
-  const modules = $$('.module');
-  const layers = $$('#story-screen .layer');
-  const progressBars = $$('.story-progress i');
-  let activeLayer = -1;
-  const setActiveModule = (i) => {
-    if (i === activeLayer) return;
-    activeLayer = i;
-    modules.forEach((m, k) => m.classList.toggle('active', k === i));
-    progressBars.forEach((b, k) => b.classList.toggle('active', k === i));
-    layers.forEach((layer, k) => {
-      layer.classList.toggle('active', k === i);
-      const video = $('video', layer);
-      if (k === i && isDesktop()) {
-        if (!video.src) video.src = video.dataset.src;
-        video.play().catch(() => {});
-      } else {
-        video.pause();
-      }
-    });
+  /* ---------- SCOM: selector de módulos ---------- */
+  const MODULES = [
+    {
+      cat: 'personal',
+      link: 'Ver procesos de Personal',
+      poster: 'thumbnails/03-asistencia-planilla.jpg',
+      video: 'videos/procesos/03-asistencia-planilla.mp4',
+      bullets: [
+        'Contratos, adendas e historial por trabajador',
+        'Horarios por grupos y turnos día/noche',
+        'Pre-planilla automática desde el tareo por QR',
+      ],
+    },
+    {
+      cat: 'logistica',
+      link: 'Ver procesos de Logística',
+      poster: 'thumbnails/04-inventario.jpg',
+      video: 'videos/procesos/04-inventario.mp4',
+      bullets: [
+        'Kardex valorizado con alertas de stock mínimo',
+        'Pedidos de contratistas con firma digital',
+        'Cotizaciones comparadas y órdenes de compra',
+      ],
+    },
+    {
+      cat: 'activos',
+      link: 'Ver procesos de Maquinaria',
+      poster: 'thumbnails/12-mantenimiento.jpg',
+      video: 'videos/procesos/12-mantenimiento.mp4',
+      bullets: [
+        'Ficha técnica, serie y horómetro por equipo',
+        'Consumo de diésel frente a horas operadas',
+        'Órdenes de taller vinculadas al almacén',
+      ],
+    },
+    {
+      cat: 'produccion',
+      link: 'Ver procesos de Producción',
+      poster: 'thumbnails/14-despacho.jpg',
+      video: 'videos/procesos/14-despacho.mp4',
+      bullets: [
+        'Lotes por labor y ticket de pesaje en balanza',
+        'Simulador de blending según leyes objetivo',
+        'Liquidación transparente con maquila y mermas',
+      ],
+    },
+  ];
+
+  const scomVideo = $('#scom-video');
+  const scomBullets = $('#scom-bullets');
+  const scomLink = $('#scom-link');
+  const stabBtns = $$('.stab');
+  let activeMod = -1;
+
+  const setModule = (idx, autoplay = true) => {
+    if (idx === activeMod) return;
+    activeMod = idx;
+    const m = MODULES[idx];
+    stabBtns.forEach((b, k) => b.setAttribute('aria-selected', String(k === idx)));
+    scomBullets.innerHTML = m.bullets.map((b) => `<li><svg><use href="#i-check"/></svg>${b}</li>`).join('');
+    scomLink.dataset.gotoFilter = m.cat;
+    scomLink.innerHTML = `${m.link} <svg><use href="#i-arrow"/></svg>`;
+    scomVideo.pause();
+    scomVideo.poster = m.poster;
+    scomVideo.src = m.video;
+    if (autoplay && !reduceMotion) scomVideo.play().catch(() => {});
   };
-  const moduleObserver = new IntersectionObserver((entries) => {
+  stabBtns.forEach((b) => b.addEventListener('click', () => setModule(+b.dataset.mod, true)));
+  setModule(0, false);
+
+  const scomObserver = new IntersectionObserver((entries) => {
     entries.forEach((e) => {
-      if (e.isIntersecting) setActiveModule(modules.indexOf(e.target));
+      if (e.isIntersecting && !reduceMotion) scomVideo.play().catch(() => {});
+      else scomVideo.pause();
     });
-  }, { rootMargin: '-45% 0px -45% 0px' });
-  modules.forEach((m) => moduleObserver.observe(m));
+  }, { threshold: 0.25 });
+  scomObserver.observe($('#scom'));
 
-  /* ---------- Galería en terreno: scroll vertical → desplazamiento horizontal ---------- */
-  const fieldPin = $('#field-pin');
-  const fieldTrack = $('#field-track');
-  const updateField = () => {
-    if (!isDesktop() || reduceMotion) { fieldTrack.style.transform = ''; return; }
-    const r = fieldPin.getBoundingClientRect();
-    const p = clamp(-r.top / (r.height - innerHeight));
-    const max = fieldTrack.scrollWidth - innerWidth;
-    fieldTrack.style.transform = `translate3d(${-p * max}px, 0, 0)`;
-  };
-
-  /* ---------- Catálogo de procesos ---------- */
+  /* ---------- Catálogo de 18 procesos ---------- */
   const rail = $('#rail');
   const filters = $('#filters');
-  const thumbSrc = (p) => `thumbnails/${p.file}.jpg`;
+
   rail.innerHTML = PROCESOS.map((p, i) => `
     <button class="pcard" data-i="${i}" data-cat="${p.cat}" aria-label="Ver video: ${p.title}">
-      <img src="${thumbSrc(p)}" alt="" loading="lazy">
+      <img src="thumbnails/${p.file}.jpg" alt="" loading="lazy">
       <span class="pcard-info">
         <span><small>${p.n} · ${CATEGORIAS[p.cat].toUpperCase()}</small><b>${p.title}</b></span>
         <span class="pcard-play"><svg><use href="#i-play"/></svg></span>
@@ -131,7 +144,7 @@
     next.disabled = rail.scrollLeft + rail.clientWidth >= rail.scrollWidth - 4;
   };
   const applyFilter = (cat) => {
-    $$('.filter', filters).forEach((b) => b.setAttribute('aria-pressed', b.dataset.filter === cat));
+    $$('.filter', filters).forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.filter === cat)));
     $$('.pcard', rail).forEach((c) => { c.hidden = !(cat === 'all' || c.dataset.cat === cat); });
     rail.scrollTo({ left: 0 });
     updateArrows();
@@ -140,8 +153,12 @@
     const b = e.target.closest('.filter');
     if (b) applyFilter(b.dataset.filter);
   });
-  $$('[data-goto-filter]').forEach((a) => a.addEventListener('click', () => applyFilter(a.dataset.gotoFilter)));
-  const step = () => $('.pcard:not([hidden])', rail).offsetWidth * 2 + 40;
+  scomLink.addEventListener('click', () => applyFilter(scomLink.dataset.gotoFilter));
+
+  const step = () => {
+    const first = $('.pcard:not([hidden])', rail);
+    return first ? first.offsetWidth * 2 + 36 : 400;
+  };
   prev.addEventListener('click', () => rail.scrollBy({ left: -step(), behavior: 'smooth' }));
   next.addEventListener('click', () => rail.scrollBy({ left: step(), behavior: 'smooth' }));
   rail.addEventListener('scroll', updateArrows, { passive: true });
@@ -189,20 +206,21 @@
     window.open(`https://wa.me/51912800115?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
   });
 
-  /* ---------- Bucle de scroll (un solo rAF para todos los efectos) ---------- */
+  /* ---------- Scroll ---------- */
   let ticking = false;
   const onScroll = () => {
     if (ticking) return;
     ticking = true;
     requestAnimationFrame(() => {
-      onScrollNav();
-      updateManifesto();
-      updateField();
-      if (!reduceMotion) updateHeroParallax();
+      nav.classList.toggle('scrolled', scrollY > 24);
+      if (!reduceMotion && isDesktop() && scrollY <= innerHeight * 1.2) {
+        heroBg.style.transform = `translate3d(0, ${scrollY * 0.14}px, 0)`;
+      } else if (!isDesktop()) {
+        heroBg.style.transform = '';
+      }
       ticking = false;
     });
   };
   addEventListener('scroll', onScroll, { passive: true });
-  addEventListener('resize', onScroll);
   onScroll();
 })();
